@@ -10,7 +10,7 @@ Search.defaultProps = {
 }
 
 export default function Search(props) {
-    const a = document.getElementsByClassName("input")
+    //const a = document.getElementsByClassName("input")
     const {onSubmit,clear} = props;
     const [searchTerm, setSearchTerm] = useState('');
     const typingTimeoutRef = useRef(null);
@@ -42,9 +42,9 @@ export default function Search(props) {
             type="text" 
             value={searchTerm}
             onChange={handleSearchTermChange}
-            />
-            <button onClick={handleReset}>Reset</button>
+            />   
         </form>
+        <button onClick={handleReset}>Reset</button>
         </div>
     )
 }

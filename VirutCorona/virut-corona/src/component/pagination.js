@@ -11,42 +11,87 @@ Pagination.defaultProps = {
 export default function Pagination(props){
     const{pagination,onPageChange} = props;
     const {page, limit, totalRows} = pagination;
-    const totalPages = Math.ceil(totalRows/limit)
-    console.log(totalPages)
+    const totalPages = Math.ceil(totalRows/limit);
+    var a=[];
+    var currentPage;
+        for(let i=1;i<=totalPages;i++){
+            if(i==totalPages){a.push('ne')}
+            if(i<6 || i==totalPages){ a.push(i)}
+          
+        }
+        const[pages,setPages]= useState(a) 
+        console.log(pages)  
+    function check(page){
+        var start, end;
+        var first=false
+        var last=false;
+        if((page-4)>0){
+            first=true;
+        }
+        if(page-(-4)<24){
+            last=true;
+        }
+        var d=page-2;
+        var e=page-(-2);
+        if(d<=1){
+            start=2;
+            end=5;
+        }
+        else if(e>22){
+            end=22;
+            start=19;
+        }else{
+            start=d;
+            end=e;
+        }
+        a=[]
+        for(let i=start;i<= end;i++){
+            a.push(i)
+        }
+        if(first && last){  
+            a.unshift("pr")
+            a.unshift(1)
+            a.push("ne");
+            a.push(totalPages)
+       setPages(a)
+        } else if(first && !last) {
+            a.unshift("pr")
+            a.unshift(1)
+            a.push(totalPages)
+       setPages(a)
+        } else if(!first && last) {
+            a.unshift(1)
+            a.push("ne");
+            a.push(totalPages)
+       setPages(a)
+        }
+        }
     function handlePageChange(newPage) {
         if(onPageChange) {
             onPageChange(newPage)
+            check(newPage)
         }
     }
+    
+  
+  
     return(
         <div className=" button-total">
             <button className=" button" disabled={page <=1} onClick={() => handlePageChange(page-1)}
             >
                 Prev
             </button>
-            <button className=" button" onClick={() => handlePageChange(1)}>1</button>
-            <button className=" button" onClick={() => handlePageChange(2)}>2</button>
-            <button className=" button"onClick={() => handlePageChange(3)}>3</button>
-            <button className=" button" onClick={() => handlePageChange(4)}>4</button>
-            <button className=" button" onClick={() => handlePageChange(5)}>5</button>
-            <button className=" button" onClick={() => handlePageChange(6)}>6</button>
-            <button className=" button" onClick={() => handlePageChange(7)}>7</button>
-            <button className=" button" onClick={() => handlePageChange(8)}>8</button>
-            <button className=" button" onClick={() => handlePageChange(9)}>9</button>
-            <button className=" button" onClick={() => handlePageChange(10)}>10</button>
-            <button className=" button" onClick={() => handlePageChange(11)}>11</button>
-            <button className=" button" onClick={() => handlePageChange(12)}>12</button>
-            <button className=" button" onClick={() => handlePageChange(13)}>13</button>
-            <button className=" button" onClick={() => handlePageChange(14)}>14</button>
-            <button className=" button" onClick={() => handlePageChange(15)}>15</button>
-            <button className=" button" onClick={() => handlePageChange(16)}>16</button>
-            <button className=" button" onClick={() => handlePageChange(17)}>17</button>
-            <button className=" button" onClick={() => handlePageChange(18)}>18</button>
-            <button className=" button" onClick={() => handlePageChange(19)}>19</button>
-            <button className=" button" onClick={() => handlePageChange(20)}>20</button>
-            <button className=" button" onClick={() => handlePageChange(21)}>21</button>
-            <button className=" button" onClick={() => handlePageChange(22)}>22</button>
-            <button className=" button" onClick={() => handlePageChange(23)}>23</button>
+            
+                {pages.map(item=>( 
+                    (item=="ne")?
+                <button className=" button2" onClick={() => handlePageChange(page+4)} >•••</button> :
+                    (item=="pr")?
+                    <button className=" button2" onClick={() => handlePageChange(page-4)} >•••</button>:
+                    (item==page)?
+                <button className=" button1" onClick={() => handlePageChange(item)} >{item}</button>:  
+                <button className=" button" onClick={() => handlePageChange(item)} >{item}</button>
+                ))}
+            
             <button className=" button" disabled={page >=totalPages} onClick={() => handlePageChange(page+1)}
             >
                 Next

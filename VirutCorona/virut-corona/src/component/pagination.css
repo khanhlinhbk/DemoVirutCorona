@@ -1,9 +1,22 @@
 .button{
     margin: 5px;
     text-align: right;
-    background-color: rgb(238, 176, 122);
+    padding: 5px 10px 5px 10px;
+
 }
-form{
+.button2{
+    margin: 5px;
+    text-align: right;
+    padding: 5px 10px 5px 10px;
+}
+.button1{
+    margin: 5px;
+    text-align: right;
+    padding: 5px 10px 5px 10px;
+    background-color: aqua;
+    border: 2px solid black;
+}
+.hide{
     
     min-width: 28px;
     left: 160px;

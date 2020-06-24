@@ -9,12 +9,13 @@ export default function Country(props){
     const[display,setDisplay] = useState(false)
     const[loading,setLoading] = useState(false);
     const[country,setCountry] = useState([]);
-    const[filter,setFilter]=useState([])
+    const[filter,setFilter]=useState([]);
     const[pagination, setPagination] = useState({
         page: 1,
         limit: 10,
-        totalRows: 221 ,
-    }); 
+        totalRows: 221,
+    });
+   
     useEffect(()=>{
         const getDataApi3 = async () =>{
             setLoading(true);
@@ -26,18 +27,20 @@ export default function Country(props){
         getDataApi3();
 
     },[]);
+     
     function handlePageChange(newPage){
         console.log('New page', newPage);
         setPagination({
             page: newPage,
             limit: 10,
-            totalRows: 221 ,
+            totalRows: filter.length ,
         }
             )
     }
     function handleFilterChange(newFilters){
         console.log("new filter",newFilters)
         setFilter(filter.filter(item => item.country.toLowerCase().includes(newFilters.searchTerm.toLowerCase())))
+       
     }
     function handleDisplay() {
         setDisplay(!display)
@@ -53,6 +56,7 @@ export default function Country(props){
         </div>
         )
     }
+    
     
     return(
         <div className="country">
