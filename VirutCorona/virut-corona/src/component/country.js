@@ -33,15 +33,26 @@ export default function Country(props){
         setPagination({
             page: newPage,
             limit: 10,
-            totalRows: filter.length ,
+            totalRows: filter.length,
         }
             )
+        
     }
-    function handleFilterChange(newFilters){
-        console.log("new filter",newFilters)
-        setFilter(filter.filter(item => item.country.toLowerCase().includes(newFilters.searchTerm.toLowerCase())))
-       
+     async function handleFilterChange(newFilters){
+        var newfilter = await filter.filter(item => item.country.toLowerCase().includes(newFilters.searchTerm.toLowerCase()));
+        setFilter(newfilter);
+        var length_filter = newfilter.length;
+        console.log(length_filter)
+        setPagination({
+            page: 1,
+            limit: 10,
+            totalRows: length_filter ,
+        }
+            )
+            //console.log(pagination.totalRows)
+
     }
+ 
     function handleDisplay() {
         setDisplay(!display)
     }
