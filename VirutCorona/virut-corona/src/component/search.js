@@ -44,7 +44,7 @@ export default function Search(props) {
             onChange={handleSearchTermChange}
             />   
         </form>
-        <button onClick={handleReset}>Reset</button>
+        <button classname="linh" onClick={handleReset}>Reset</button>
         </div>
     )
 }

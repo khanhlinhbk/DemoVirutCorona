@@ -58,6 +58,12 @@ export default function Country(props){
     }
     function handleClear(){
         setFilter(country)
+        setPagination({
+            page: 1,
+            limit: 10,
+            totalRows: 221 ,
+        }
+            )
     }
     if(loading){
         return(
@@ -70,9 +76,8 @@ export default function Country(props){
     
     
     return(
-        <div className="country">
+        <div className="country" onClick={handleDisplay}>
             <h1>Covid-19 các quốc gia</h1>
-            
             <table>
                 <tr className="item">
                     <td className="countries">
