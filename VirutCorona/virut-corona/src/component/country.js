@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {api} from  '../service/api'
+import {api} from  '../service/api';
 import './country.css';
 import './pagination.css'
 import Pagination from './pagination';
 import Search from './search';
 import Logo from './images/search.png';
+import parse from 'html-react-parser';
 export default function Country(props){
+   // const parse = require('html-react-parser');
     const[display,setDisplay] = useState(false)
     const[loading,setLoading] = useState(false);
     const[country,setCountry] = useState([]);
@@ -40,9 +42,21 @@ export default function Country(props){
     }
      async function handleFilterChange(newFilters){
         var newfilter = await filter.filter(item => item.country.toLowerCase().includes(newFilters.searchTerm.toLowerCase()));
-        setFilter(newfilter);
+        console.log(newfilter)
+        console.log(newFilters)
+        var ai = new RegExp('('+newFilters.searchTerm+')', "gi")
+        var newfilter1 = await newfilter.map(item =>{item.country=item.country.replace(ai,
+            '<span class="replace">$1</span>'
+        // parse('<h1>abc</h1>')
+        );
+    return item
+    }
+        )
+           // newFilters.searchTerm,<span className="replace">{newFilters.searchTerm}</span>
+            ;
+        console.log(newfilter1)
+        setFilter(newfilter1);
         var length_filter = newfilter.length;
-        console.log(length_filter)
         setPagination({
             page: 1,
             limit: 10,
@@ -57,6 +71,7 @@ export default function Country(props){
         setDisplay(!display)
     }
     function handleClear(){
+        console.log(country)
         setFilter(country)
         setPagination({
             page: 1,
@@ -76,7 +91,7 @@ export default function Country(props){
     
     
     return(
-        <div className="country" onClick={handleDisplay}>
+        <div className="country" >
             <h1>Covid-19 các quốc gia</h1>
             <table>
                 <tr className="item">
@@ -84,7 +99,7 @@ export default function Country(props){
                         <span> Quốc gia</span>
                         <span>
                             <button onClick={handleDisplay}>
-                                <img src={Logo} width="10px" height="10px"/>
+                                <img src={Logo} alt="Italian Trulli" width="10px" height="10px"/>
                                 
                             </button>
                         </span>
@@ -98,7 +113,7 @@ export default function Country(props){
                 </tr>
                 {filter.slice(pagination.limit*(pagination.page-1),pagination.limit*pagination.page).map(item => (
                     <tr className="item1" >
-                        <td className="countries">{item.country}</td>
+                        <td className="countries">{parse(item.country)}</td>
                         <td  className="cases">{item.total_cases}</td>
                         <td className="new-cases"><p>{item.new_cases}</p></td>
                         <td className="deaths">{item.total_deaths}</td>

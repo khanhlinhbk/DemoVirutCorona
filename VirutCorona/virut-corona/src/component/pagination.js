@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import './pagination.css'
 Pagination.propTypes = {
@@ -70,7 +70,7 @@ export default function Pagination(props){
             a.push(totalPages)
       // setPages(a)
         }else if(!checkPage.first && !checkPage.last){
-            if(totalPages==0 || totalPages==1){
+            if(totalPages===0 || totalPages===1){
                 a.unshift(1)
                // setPages(a)
             }else{ a.unshift(1)
@@ -106,11 +106,11 @@ export default function Pagination(props){
             </button>
             
                 {a.map(item=>( 
-                    (item=="ne")?
+                    (item==="ne")?
                 <button className=" button2" onClick={() => handlePageChange(page+4)} >•••</button> :
-                    (item=="pr")?
+                    (item==="pr")?
                     <button className=" button2" onClick={() => handlePageChange(page-4)} >•••</button>:
-                    (item==page)?
+                    (item===page)?
                 <button className=" button1" onClick={() => handlePageChange(item)} >{item}</button>:  
                 <button className=" button" onClick={() => handlePageChange(item)} >{item}</button>
                 ))}

@@ -1,5 +1,4 @@
 import React, {useState,useEffect} from 'react';
-import axios from 'axios';
 import {api} from '../service/api';
 import './area.css';
 export default function Area(props){
@@ -9,7 +8,6 @@ export default function Area(props){
     const[area3,setArea3] = useState([])
     const[area4,setArea4] = useState([])
     const[area5,setArea5] = useState([])
-    const[area6,setArea6] = useState([])
     useEffect( () => {
         
         const getDataApiv2 = async () => {

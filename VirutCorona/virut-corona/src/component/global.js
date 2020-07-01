@@ -1,14 +1,26 @@
 import React, {useState,useEffect} from 'react';
-import axios from 'axios';
+import {api} from  '../service/api';
 import './global.css';
 export default function Global(props){
     const[world,setWorld] = useState({})
-    useEffect(async () => {
-        const result = await axios(
-          'https://gw.vnexpress.net/cr/?name=world_coronavirus',
-        );
-        setWorld(result.data.data.data[0].table_world);
-      }, []);
+
+    useEffect(()=>{
+        const getDataApi0 = async () =>{
+            const get_world = await api.getDataApi()
+            setWorld(get_world.data.data[0].table_world);
+        }
+        getDataApi0();
+
+    },[]);
+     
+
+
+    // useEffect(async () => {
+    //     const result = await axios(
+    //       'https://gw.vnexpress.net/cr/?name=world_coronavirus',
+    //     );
+    //     setWorld(result.data.data.data[0].table_world);
+    //   }, []);
     return(
        <div className="global">
             <h1>Covid-19 trên thế giới</h1>  
